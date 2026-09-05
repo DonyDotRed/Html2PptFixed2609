@@ -1,0 +1,27 @@
+DECK·FORGE — HTML/마크다운을 PPTX(슬라이드 · A0 포스터)로
+
+■ 가장 빠른 길
+   index.html 을 두 번 눌러 브라우저로 엽니다. 이 파일 하나가 프로그램 전부입니다.
+   열쇠말: redpass
+
+■ GitHub Pages 에 올리기 — 파일 하나면 끝
+   1) 저장소를 만듭니다.
+   2) Add file → Upload files 로 index.html 을 끌어다 놓고 Commit.
+   3) Settings → Pages → Branch: main / (root) → Save.
+   4) 1~2분 뒤 https://<계정>.github.io/<저장소>/ 에서 열립니다.
+
+   src 폴더와 .nojekyll 은 올려도 되고 안 올려도 됩니다. 없어도 동작합니다.
+
+■ 왜 파일이 하나인가
+   PPTX 생성 엔진(477 KB)이 index.html 안에 들어 있습니다.
+   앞서 vendor 폴더에 두었을 때 실패한 이유는, GitHub Pages 가 쓰는 Jekyll 이
+   기본 설정에서 vendor 폴더를 배포에서 제외하기 때문입니다. 이제 그 문제가 없습니다.
+
+■ 고쳐 쓰려면
+   src/index.html  화면과 디자인
+   src/app.js      변환기 · 조판 엔진 · 편집기
+   src/lib/        PPTX 엔진 원본
+   고친 뒤  python3 src/build.py  를 실행하면 루트 index.html 이 새로 만들어집니다.
+
+■ 확인
+   앱 위쪽 "자체 검증" 단추를 누르면 18개 항목이 실행됩니다. 전부 통과해야 정상입니다.
