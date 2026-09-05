@@ -1,32 +1,30 @@
 DECK·FORGE — HTML/마크다운을 PPTX(슬라이드 · A0 포스터)로
 
-★ 열어야 할 파일은 index.html 하나입니다. (열쇠말: redpass)
-  이 폴더의 index.html 안에 PPTX 엔진까지 전부 들어 있습니다.
-  source 폴더는 고쳐 쓸 때만 필요합니다. 그 안의 파일은 열지 마세요.
+★ 열 파일은 index.html 하나입니다. 열쇠말은 redpass 입니다.
+  나머지 파일은 고쳐 쓸 때만 필요합니다. 없어도 index.html 은 혼자 동작합니다.
 
-■ GitHub Pages 에 올리기 — 파일 하나면 끝
+■ GitHub Pages 에 올리기
   1) 저장소를 만듭니다.
   2) Add file → Upload files 로 index.html 을 끌어다 놓고 Commit.
+     (이 폴더를 통째로 올려도 됩니다. 파일 이름이 겹치지 않습니다.)
   3) Settings → Pages → Branch: main / (root) → Save.
   4) 1~2분 뒤 https://<계정>.github.io/<저장소>/ 에서 열립니다.
-     (바로 안 보이면 새로고침을 Ctrl+Shift+R 로 하세요. 캐시가 남습니다.)
+     화면이 예전 것으로 보이면 Ctrl+Shift+R 로 강제 새로고침하세요.
 
-■ 제대로 올라갔는지 확인하는 법
-  화면 맨 아래 상태줄 오른쪽에 "엔진  내장 · 준비됨" 이라고 초록색으로 나오면 정상입니다.
-  "없음" 이 뜨거나 노란 막대가 보이면, 지금 열고 있는 파일이 index.html 이 아닙니다.
-  막대에 현재 파일 경로가 함께 표시되니 그것으로 확인하세요.
+■ 정상 여부는 화면 맨 아래 상태줄에서
+  "엔진  내장 · 준비됨" 이 초록색으로 보이면 정상입니다.
+  노란 막대가 보인다면 index.html 이 아니라 deckforge-shell.html 을 연 것입니다.
 
-■ 폴더 구조
-  index.html                    ← 이것만 올리면 됩니다 (엔진 내장, 580 KB)
-  START-HERE.txt                이 파일
-  README.md                     자세한 설명
-  .nojekyll                     있으면 좋지만 없어도 됩니다
-  source/editable-index.html    화면과 디자인 (고쳐 쓸 때)
-  source/app.js                 변환기 · 조판 엔진 · 편집기
-  source/lib/pptxgen.bundle.js  PPTX 엔진 원본
-  source/build.py               고친 뒤 실행 → 상위 폴더 index.html 재생성
+■ 이 폴더의 파일들 (전부 같은 위치, 하위 폴더 없음)
+  index.html                     실행용. 엔진까지 들어 있는 완성본 (580 KB)
+  deckforge-shell.html           편집용 화면. 혼자서는 PPTX 저장이 안 됩니다
+  deckforge-app.js               변환기 · 조판 엔진 · 편집기 소스
+  deckforge-engine.js            PPTX 생성 엔진 원본 (pptxgenjs, MIT)
+  deckforge-build.py             위 셋을 합쳐 index.html 을 다시 만듭니다
+  deckforge-engine-LICENSE.txt   엔진 라이선스 고지
+  README.md                      자세한 설명
+  .nojekyll                      있으면 좋지만 없어도 됩니다
 
-■ 참고
-  이전 판에서 엔진을 vendor 폴더에 두었더니 실패했던 이유는,
-  GitHub Pages 가 쓰는 Jekyll 이 기본 설정에서 vendor 폴더를 배포하지 않기 때문입니다.
-  지금은 엔진이 index.html 안에 있어 그 문제가 없습니다.
+■ 고쳐 쓰는 법
+  deckforge-shell.html 이나 deckforge-app.js 를 고친 뒤,
+  이 폴더에서  python3 deckforge-build.py  를 실행하면 index.html 이 새로 만들어집니다.
