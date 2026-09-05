@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DECK·FORGE 진단</title><style>body{font-family:system-ui,"Malgun Gothic",sans-serif;max-width:820px;margin:40px auto;padding:0 20px;line-height:1.6}button{padding:9px 14px}pre{background:#111827;color:#e5e7eb;padding:14px;overflow:auto;border-radius:8px}.ok{color:#087f23}.bad{color:#b42318}</style></head>
+<body><h1>DECK·FORGE GitHub Pages 진단</h1><p>이 페이지가 열리면 정적 호스팅 자체는 정상입니다. 아래 검사는 로컬 PPTX 엔진 로드와 실제 Blob 생성을 확인합니다.</p>
+<button id="run">진단 실행</button> <button id="down" disabled>테스트 PPTX 내려받기</button><pre id="log">대기 중…</pre>
+<script src="vendor/pptxgen.bundle.js" onerror="window.__libLoadError=true"></script>
+<script>
+const log=[]; const box=document.querySelector('#log'); let lastBlob=null;
+function p(s){log.push(s);box.textContent=log.join('\n')}
+async function run(){log.length=0;lastBlob=null;document.querySelector('#down').disabled=true;
+ p('1) URL: '+location.href); p('2) HTTPS/보안 컨텍스트: '+window.isSecureContext); p('3) 엔진 스크립트 오류 플래그: '+!!window.__libLoadError);
+ p('4) window.PptxGenJS: '+typeof window.PptxGenJS);
+ if(typeof window.PptxGenJS!=='function'){p('FAIL: vendor/pptxgen.bundle.js 를 찾지 못했거나 실행되지 않았습니다.');return}
+ try{const pptx=new window.PptxGenJS();pptx.layout='LAYOUT_WIDE';const s=pptx.addSlide();s.addText('DECK·FORGE diagnostic',{x:1,y:1,w:8,h:1,fontSize:24});lastBlob=await pptx.write({outputType:'blob'});p('5) 생성 Blob: '+lastBlob.size+' bytes');if(lastBlob.size<2000)throw new Error('Blob too small');p('PASS: PPTX 엔진과 생성 기능이 정상입니다.');document.querySelector('#down').disabled=false}catch(e){p('FAIL: '+(e.stack||e.message||e))}}
+document.querySelector('#run').onclick=run;document.querySelector('#down').onclick=()=>{if(!lastBlob)return;const b=new Blob([lastBlob],{type:'application/vnd.openxmlformats-officedocument.presentationml.presentation'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='deckforge-diagnostic.pptx';a.click();setTimeout(()=>URL.revokeObjectURL(u),10000)};
+window.addEventListener('error',e=>p('JS ERROR: '+e.message));window.addEventListener('unhandledrejection',e=>p('PROMISE ERROR: '+(e.reason?.message||e.reason)));
+</script></body></html>

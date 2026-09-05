@@ -1,0 +1,26 @@
+{
+  "index.html": {
+    "sha256": "1762fdb1b781f2fc3aa82fe53ed93490b15123609d925da6878c331fa062c88f",
+    "bytes": 30258
+  },
+  "app.js": {
+    "sha256": "87fbd2f65371c4e34fbedbea389cacdca2d6d4d9b0f14eb707cb5d2311d83bd4",
+    "bytes": 87955
+  },
+  "vendor/pptxgen.bundle.js": {
+    "sha256": "cd078ca9e91c6f9e061ee0a3c310d6ff157c3a71b1dea7f40fd53818017266ff",
+    "bytes": 477529
+  },
+  "diagnostics.html": {
+    "sha256": "65135af2706b878c20170f38022b5a0572ce596f519cf49299e9b4f54cd89227",
+    "bytes": 2504
+  },
+  "deckforge-standalone.html": {
+    "sha256": "654eef3d31a36f3bd513353d799b69117603ed994f097ee6c1dc7853e01a258c",
+    "bytes": 595680
+  },
+  "README.md": {
+    "sha256": "121fb8b09898661073d83a5dcdcaecab3adc0359f078fbe1889491fdfe58e418",
+    "bytes": 2726
+  }
+}
