@@ -1637,14 +1637,26 @@ function checkLib() {
   if (st && window.__pptxDone) { st.textContent = '없음'; st.style.color = 'var(--bad)'; }
   if (!window.__pptxDone) { warn.hidden = true; setTimeout(checkLib, 250); return; }  // 아직 찾는 중
   warn.hidden = false;
-  console.log('DECK·FORGE — 엔진을 찾지 못했습니다. 시도한 위치:', (window.__pptxTried || []).join(', '));
-  const where = $('#libWhere');
-  if (where) {
-    const here = location.pathname;
-    where.textContent = /(^|\/)(src|source)\//.test(here)
-      ? '지금 연 파일: ' + here + ' — 편집용입니다. 상위 폴더의 index.html 을 여세요'
-      : '지금 연 파일: ' + here;
+  const tried = (window.__pptxTried || []);
+  console.log('DECK·FORGE — 엔진을 찾지 못했습니다. 시도한 위치:', tried.join(', '));
+  const title = $('#libTitle'), msg = $('#libMsg'), where = $('#libWhere');
+  const net = tried.some(u => /^https?:/.test(u));
+  if (!window.__fileComplete) {
+    title.textContent = 'HTML 파일이 잘렸습니다';
+    msg.innerHTML = '이 페이지의 끝부분이 없습니다. 복사·붙여넣기로 옮기면 큰 파일이 잘립니다. ' +
+      '파일을 <b>내려받아 그대로 업로드</b>하거나, 용량이 작은 판을 쓰세요.';
+  } else if (window.__pptxInline) {
+    title.textContent = '내장 엔진이 실행되지 않았습니다';
+    msg.textContent = '파일이 손상되었을 수 있습니다. 다시 내려받아 그대로 올려 주세요.';
+  } else if (net) {
+    title.textContent = 'PPTX 엔진을 찾지 못했습니다';
+    msg.innerHTML = '같은 폴더에 <code style="font-family:var(--mono)">deckforge-engine.js</code> 를 두거나, ' +
+      '인터넷 연결을 확인하세요. 변환·미리보기·편집은 지금도 됩니다.';
+  } else {
+    title.textContent = 'PPTX 엔진을 찾지 못했습니다';
+    msg.textContent = '변환·미리보기·편집은 지금도 됩니다.';
   }
+  if (where) where.textContent = '파일: ' + location.pathname + ' · 시도 ' + tried.length + '곳';
   $('#btnLibFile').onclick = () => $('#libFile').click();
   $('#libFile').onchange = e => {
     const f = e.target.files[0]; if (!f) return;

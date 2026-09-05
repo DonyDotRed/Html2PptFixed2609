@@ -6,6 +6,10 @@
 <title>DECK·FORGE — HTML을 PPTX로</title>
 <meta name="description" content="HTML 문서를 발표용 PowerPoint 파일로 변환하는 브라우저 작업대. 설치 없이, 서버 전송 없이 동작합니다.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23131c27'/><rect x='6' y='9' width='20' height='14' rx='2' fill='%23d9a441'/><rect x='9' y='13' width='9' height='2' fill='%23131c27'/><rect x='9' y='17' width='13' height='2' fill='%23131c27'/></svg>">
+<script>setTimeout(function () {           /* 로더가 죽어도 진단은 뜨게 */
+  window.__pptxDone = true;
+  if (window.checkLib) window.checkLib();
+}, 8000);</script>
 <style id="pageStyle"></style>
 <style>
 /* ── 토큰 ──────────────────────────────────────────────────────── */
@@ -258,8 +262,8 @@ table.tests td:first-child{font-family:var(--mono);width:56px}
 
   <div id="libWarn" hidden style="display:flex;align-items:center;gap:10px;padding:9px 14px;
        background:#3a2a15;border-bottom:1px solid var(--brass-d);font-size:13px;color:#f0dcb4">
-    <b style="color:var(--brass);font-weight:600">이 파일은 편집용입니다</b>
-    <span style="color:#c8b590">PPTX로 내려받으려면 같은 폴더의 <code style="font-family:var(--mono)">index.html</code> 을 여세요. 여기서도 변환·미리보기·편집은 됩니다.</span>
+    <b id="libTitle" style="color:var(--brass);font-weight:600">PPTX 엔진 준비 안 됨</b>
+    <span id="libMsg" style="color:#c8b590"></span>
     <span id="libWhere" style="color:#a8967a;font-family:var(--mono);font-size:11.5px"></span>
     <span class="sp" style="flex:1"></span>
     <button class="tbtn" id="btnLibFile">파일 직접 고르기</button>
@@ -539,5 +543,6 @@ window.__pptxPaths = [
 </script>
 <!--PPTX_LOADER_END-->
 <script src="deckforge-app.js"></script>
+<script>window.__fileComplete = true;</script>
 </body>
 </html>
