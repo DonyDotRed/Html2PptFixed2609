@@ -1434,6 +1434,21 @@ async function runTests() {
     state.opts.aspect = keep; state.slides = ks;
     return (small > 18 && big > 70) || ('가장 작은 글자 ' + small.toFixed(0) + 'pt · 가장 큰 글자 ' + big.toFixed(0) + 'pt');
   });
+  t('숨긴 요소가 실제로 숨겨진다', () => {
+    const probe = document.createElement('div');
+    probe.hidden = true; probe.style.display = 'flex';
+    document.body.appendChild(probe);
+    const d = getComputedStyle(probe).display;
+    probe.remove();
+    return d === 'none' || ('hidden 인데 display:' + d);
+  });
+  t('엔진이 준비되면 안내 막대가 보이지 않는다', () => {
+    const w = $('#libWarn');
+    if (!w) return '막대 요소 없음';
+    if (!libReady()) return true;                       // 엔진이 없는 환경에서는 건너뜁니다
+    const d = getComputedStyle(w).display;
+    return (w.hidden && d === 'none') || ('hidden=' + w.hidden + ' display=' + d);
+  });
   t('테마 색이 모두 정상 형식이다', () => {
     const bad = THEMES.filter(x => ['bg', 'fg', 'title', 'accent', 'muted', 'panel'].some(k => !/^[0-9A-F]{6}$/.test(x[k])));
     return bad.length === 0 || bad.map(b => b.id).join(',');
